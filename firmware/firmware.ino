@@ -1,6 +1,10 @@
-#define Sensor1 A0
-#define Sensor2 A1
-#define Sensor3 A2
+#define Sensor1 A3
+#define Sensor2 A3
+#define Sensor3 A3
+
+unsigned long lastMillis;
+int numberOfCapturePerSecond = 25;
+int timeBetweenCaptureInMillis = (1/numberOfCapturePerSecond) * 100;
 
 void setup() {
   // put your setup code here, to run once:
@@ -11,9 +15,14 @@ void setup() {
 }
 
 void loop() {
-  int values[3] = {0, 0, 0};
-  readSensor(values);
-  exportValues(values);
+  // check if we aren't running too fast
+  if (millis() - lastMillis >= timeBetweenCaptureInMillis*10UL) {
+    lastMillis = millis(); // reset the last execution time
+    int values[3] = {0, 0, 0};
+    readSensor(values);
+    exportValues(values);
+  }
+  // if so do nothing
 }
 
 void readSensor(int (& values) [3]) {
@@ -27,6 +36,10 @@ void exportValues(int (& values) [3]) {
   for (int x = 0; x < 3; x++) {
     String dataToAdd = String(values[x]);
     data.concat(dataToAdd);
+    if (x < 2) {
+      String separator = ":";
+      data.concat(separator);
+    }
   }
   Serial.println(data);
 }
