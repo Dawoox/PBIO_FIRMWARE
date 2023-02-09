@@ -1,6 +1,6 @@
-#define Sensor1 A3
-#define Sensor2 A3
-#define Sensor3 A3
+#define Sensor1 A0
+#define Sensor2 A1
+#define Sensor3 A2
 
 unsigned long lastMillis;
 int numberOfCapturePerSecond = 25;
