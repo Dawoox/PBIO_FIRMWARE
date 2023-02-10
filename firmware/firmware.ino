@@ -3,7 +3,7 @@
 #define Sensor3 A2
 
 unsigned long lastMillis;
-int numberOfCapturePerSecond = 25;
+int numberOfCapturePerSecond = 40;
 int timeBetweenCaptureInMillis = (1/numberOfCapturePerSecond) * 100;
 
 void setup() {
